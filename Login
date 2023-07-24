@@ -1,0 +1,76 @@
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Test2 {
+	
+WebDriver driver;
+	
+	@BeforeTest
+	public void BeforeMethod()
+	{
+		ChromeOptions chromeOptions = new ChromeOptions();
+		driver = new ChromeDriver(chromeOptions);
+		
+	}
+
+	@Test
+	public void Login() throws InterruptedException {
+		driver.get("https://opensource-demo.orangehrmlive.com");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+		String name = "admin";
+		String pass = "admin123";
+
+		// userName is incorrect and Password is correct
+		driver.findElement(By.name("username")).sendKeys(name);
+		driver.findElement(By.name("password")).sendKeys(pass);
+		driver.findElement(By.className("oxd-button")).click();
+		
+		Thread.sleep(1000);
+		
+		//clicking Admin
+		driver.findElement(By.className("oxd-text")).click();
+		//giving username
+		driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[1]/div[2]/form/div[1]/div/div[1]/div/div[2]/input")).sendKeys("Admin");
+		
+//		WebElement dropUserRole=driver.findElement(By.xpath("//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/i[1]"));
+//		Actions action = new Actions(driver); 
+//		action.moveToElement(dropUserRole); 
+//		action.click().build().perform();
+		
+		//clicking search
+		driver.findElement(By.xpath("//button[@class=\"oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space\"]")).click();
+		Thread.sleep(1000);
+		
+		//selecting the items
+		driver.findElement(By.xpath("//i[@class=\"oxd-icon bi-check oxd-checkbox-input-icon\"]")).click();
+		driver.findElement(By.xpath("//i[@class=\"oxd-icon bi-pencil-fill\"]")).click();
+	
+		Thread.sleep(1000);
+		// forgot password
+		driver.findElement(By.xpath("//i[@class=\"oxd-icon bi-check oxd-checkbox-input-icon\"]")).click();
+		driver.findElement(By.xpath("//div[@class='oxd-grid-item oxd-grid-item--gutters user-password-cell']//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@type='password']")).sendKeys("Admin@123");
+		driver.findElement(By.xpath("//div[@class='oxd-grid-item oxd-grid-item--gutters']//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@type='password']")).sendKeys("Admin@123");		
+		//driver.findElement(By.xpath("//button[@class=\"oxd-button oxd-button--medium oxd-button--ghost\"]")).click();
+		driver.findElement(By.xpath("//button[@class=\"oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space\"]")).click();
+		Thread.sleep(1000);
+		
+		//checking cancel button
+		driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[1]/div[2]/form/div[1]/div/div[1]/div/div[2]/input")).sendKeys("Admin");
+		driver.findElement(By.xpath("//button[@class=\"oxd-button oxd-button--medium oxd-button--ghost\"]")).click();
+		
+		
+		
+	}
+	
+}
