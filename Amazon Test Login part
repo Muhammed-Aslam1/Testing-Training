@@ -1,0 +1,90 @@
+package com.deloitte.testing.amazon.AmazonTesting;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+//import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+//import org.testng.Assert;
+import org.testng.annotations.*;
+
+public class Test1 {
+	
+	WebDriver driver;
+	
+	@BeforeTest
+	public void BeforeMethod() {
+		ChromeOptions chromeOptions = new ChromeOptions();
+		driver = new ChromeDriver(chromeOptions);
+	}
+	
+	@Test(priority = 1)
+	public void loginInvalidPhnum() throws InterruptedException {
+		//getting the amazon site
+		 driver.get("https://www.amazon.in/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.findElement(By.id("nav-link-accountList")).click();
+		
+		Thread.sleep(1000);
+		//passing wrong phone number
+		driver.findElement(By.id("ap_email")).sendKeys("8086121280");
+		driver.findElement(By.className("a-button-input")).click();
+		
+		Thread.sleep(1000);
+		//printing the expexted error msg
+		String text=driver.findElement(By.className("a-alert-container")).getText();
+		System.out.println(text);	
+	}
+	
+	@Test(priority = 2)
+	public void loginValidPhnum() throws InterruptedException {
+		//getting the amazon site
+		 driver.get("https://www.amazon.in/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.findElement(By.id("nav-link-accountList")).click();
+		
+		Thread.sleep(1000);
+		//passing valid phone number
+		driver.findElement(By.id("ap_email")).sendKeys("9400482313");
+		driver.findElement(By.className("a-button-input")).click();
+		
+	}
+	
+	@Test(priority = 3)
+	public void loginInvalidPSd() throws InterruptedException {
+		 driver.get("https://www.amazon.in/");
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+			driver.findElement(By.id("nav-link-accountList")).click();
+			
+			Thread.sleep(1000);
+			//passing valid phone number
+			driver.findElement(By.id("ap_email")).sendKeys("9400482313");
+			driver.findElement(By.className("a-button-input")).click();
+			
+			//wrong password
+			driver.findElement(By.xpath("//input[@id=\"ap_password\"]")).sendKeys("Zyz");
+			driver.findElement(By.id("signInSubmit")).click();
+			String text=driver.findElement(By.id("auth-error-message-box")).getText();
+			System.out.println(text);
+	}
+	
+	@Test(priority = 4)
+	public void loginValidPsd() throws InterruptedException
+	{
+		 driver.get("https://www.amazon.in/");
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+			driver.findElement(By.id("nav-link-accountList")).click();
+			
+			Thread.sleep(1000);
+			//passing valid phone number
+			driver.findElement(By.id("ap_email")).sendKeys("9400482313");
+			driver.findElement(By.className("a-button-input")).click();
+			
+			//valid password
+			driver.findElement(By.xpath("//input[@id=\"ap_password\"]")).sendKeys("Aslam@2001");
+			driver.findElement(By.id("signInSubmit")).click();
+		
+	}
+}
